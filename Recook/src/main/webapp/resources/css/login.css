@@ -1,0 +1,85 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f5f5f7;
+}
+
+/* 헤더 때문에 내려줌 */
+.main-container {
+    padding-top: 120px;
+    display: flex;
+    justify-content: center;
+}
+
+.login-box {
+    width: 400px;
+    background: #fff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.login-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #1d1d1f;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    outline: none;
+}
+
+.input-group input:focus {
+    border-color: #FF6B6B;
+}
+
+.login-submit {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: #FF6B6B;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.login-submit:hover {
+    opacity: 0.85;
+}
+
+.extra {
+    margin-top: 20px;
+    font-size: 13px;
+    color: #86868b;
+}
+
+.extra a {
+    color: #FF6B6B;
+    text-decoration: none;
+}
+
+.extra-links {
+    margin-top: 15px;
+    font-size: 13px;
+    color: #86868b;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.extra-links a {
+    color: #FF6B6B;
+    text-decoration: none;
+}

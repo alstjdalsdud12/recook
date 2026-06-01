@@ -1,0 +1,119 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f5f5f7;
+}
+
+.main-container {
+    padding-top: 120px;
+    display: flex;
+    justify-content: center;
+}
+
+.recipe-wrapper {
+    width: 1000px;
+}
+
+.recipe-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.recipe-header h1 {
+    font-size: 34px;
+}
+
+.recipe-header p {
+    color: #86868b;
+}
+
+.category-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 40px;
+    justify-content: center;
+}
+
+.category-card {
+    padding: 12px 20px;
+    background: white;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: 0.2s;
+    font-weight: 600;
+}
+
+.category-container a {
+    color: black;
+    text-decoration: none;
+}
+
+.category-card:hover {
+    background: #FF6B6B;
+    color: white;
+}
+
+.recipe-list {
+    display: grid;
+    grid-template-columns: repeat(3, 300px);
+    justify-content: center;
+    gap: 25px;
+}
+
+.recipe-card {
+    width: 300px;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
+
+.recipe-card:hover {
+    transform: translateY(-5px);
+}
+
+.thumb {
+    height: 160px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-color: #eee;
+}
+
+.thumb.img1 {
+    background-image: url("../images/type.png");
+}
+
+.thumb.img2 {
+    background-image: url("../images/situation.png");
+}
+
+.thumb.img3 {
+    background-image: url("../images/ingredient.png");
+}
+
+.thumb.img4 {
+    background-image: url("../images/method.png");
+}
+
+.recipe-list a {
+    color: black;
+    text-decoration: none;
+}
+
+.recipe-info {
+    padding: 15px;
+}
+
+.title {
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.desc {
+    font-size: 13px;
+    color: #666;
+}

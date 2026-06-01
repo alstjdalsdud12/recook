@@ -1,0 +1,126 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f5f5f7;
+}
+
+.main-container {
+    padding-top: 120px;
+    display: flex;
+    justify-content: center;
+}
+
+.wrapper {
+    width: 1000px;
+}
+
+.header-box {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.header-box h1 {
+    font-size: 32px;
+}
+
+.header-box p {
+    color: #888;
+}
+
+.filter-box {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.filter {
+    padding: 10px 25px;
+    border-radius: 25px;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.filter.active {
+    background: #FF6B6B;
+    color: white;
+}
+
+.sub-text {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #666;
+    font-size: 15px;
+}
+
+.sub-text span {
+    cursor: pointer;
+}
+
+.sub-text span:hover {
+    color: #FF6B6B;
+    font-weight: 600;
+}
+
+.recipe-list {
+    display: grid;
+    grid-template-columns: repeat(4, 220px);
+    justify-content: center;
+    gap: 25px;
+}
+
+.card {
+    width: 220px;
+    text-decoration: none;
+    color: black;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.thumb {
+    height: 160px;
+    background-size: cover;
+    background-position: center;
+}
+
+.img1 { background-image: url("../images/korean.png"); }
+.img2 { background-image: url("../images/western.png"); }
+.img3 { background-image: url("../images/chinese.png"); }
+.img4 { background-image: url("../images/japanese.png"); }
+
+.info {
+    padding: 15px;
+}
+
+.title {
+    font-weight: 700;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 30px 0;
+}
+
+.pagination button {
+    padding: 8px 16px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+}
+
+.pagination button:hover {
+    background: #FF6B6B;
+    color: white;
+}

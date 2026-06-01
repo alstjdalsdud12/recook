@@ -1,0 +1,463 @@
+body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+    background:#f5f5f7;
+}
+
+.main-container{
+    padding-top:120px;
+    display:flex;
+    justify-content:center;
+}
+
+.detail-wrapper{
+    width:800px;
+}
+
+/* STEP1 */
+.image-box{
+    position:relative;
+    width:100%;
+    height:350px;
+    border-radius:20px;
+    overflow:hidden;
+    background:#ddd;
+    margin-bottom:25px;
+}
+
+.recipe-img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    cursor:pointer;
+}
+
+.hits{
+    position:absolute;
+    bottom:10px;
+    right:15px;
+    background:rgba(0,0,0,0.6);
+    color:white;
+    padding:6px 12px;
+    border-radius:15px;
+    font-size:13px;
+}
+
+.title-row{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.recipe-title{
+    font-size:32px;
+    margin:0;
+}
+
+.star-display{
+    color:gold;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.recipe-desc{
+    color:#666;
+    margin-bottom:20px;
+}
+
+.info-box{
+    display:flex;
+    gap:20px;
+    align-items:center;
+}
+
+.share-btn,
+.save-btn{
+    padding:8px 16px;
+    border:none;
+    color:white;
+    border-radius:20px;
+    cursor:pointer;
+}
+
+.save-btn{
+    margin-left:auto;
+    background:#ff8fa3;
+}
+
+.share-btn{
+    background:#FF6B6B;
+}
+
+/* STEP2 */
+.ingredient-section{
+    margin-top:40px;
+}
+
+.section-title{
+    font-size:22px;
+    margin:0;
+}
+
+.ingredient-box{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.ingredient-item{
+    padding:8px 14px;
+    background:white;
+    border-radius:20px;
+    border:1px solid #ddd;
+}
+
+/* STEP3 */
+.step-section{
+    margin-top:40px;
+}
+
+.step-box{
+    display:flex;
+    flex-direction:column;
+    gap:25px;
+}
+
+.step-item{
+    display:flex;
+    gap:15px;
+}
+
+.step-num{
+    font-weight:bold;
+    color:#FF6B6B;
+    min-width:70px;
+}
+
+.step-text{
+    margin-bottom:10px;
+}
+
+.step-images{
+    display:flex;
+    gap:10px;
+}
+
+.step-img{
+    width:120px;
+    height:100px;
+    object-fit:cover;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+/* STEP4 */
+.author-section{
+    margin-top:50px;
+}
+
+.author-box{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    background:white;
+    padding:20px;
+    border-radius:15px;
+}
+
+.author-img{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    object-fit:cover;
+}
+
+.author-name{
+    font-weight:bold;
+    font-size:18px;
+}
+
+.author-desc{
+    color:#666;
+}
+
+/* STEP5 */
+.review-section{
+    margin-top:50px;
+}
+
+.review-top{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:15px;
+}
+
+#reviewCount{
+    color:#888;
+    font-size:18px;
+    font-weight:500;
+    margin-top:2px;
+}
+
+.review-list{
+    margin-bottom:20px;
+}
+
+.review-item{
+    background:white;
+    padding:20px;
+    border-radius:20px;
+    margin-bottom:15px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.05);
+}
+
+.review-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:10px;
+}
+
+.review-user{
+    font-weight:bold;
+    font-size:18px;
+}
+
+.review-right{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.review-rating{
+    color:gold;
+    font-size:18px;
+}
+
+.review-date{
+    color:#999;
+    font-size:14px;
+}
+
+.review-content{
+    font-size:16px;
+    line-height:1.5;
+    color:#222;
+}
+
+.review-star-input{
+    margin-bottom:15px;
+}
+
+.review-star-input span{
+    font-size:28px;
+    color:#ccc;
+    cursor:pointer;
+}
+
+.review-star-input span.active{
+    color:gold;
+}
+
+.review-form textarea{
+    width:100%;
+    height:120px;
+    border-radius:15px;
+    border:1px solid #ddd;
+    padding:15px;
+    resize:none;
+    font-size:16px;
+    box-sizing:border-box;
+}
+
+.review-btn{
+    margin-top:15px;
+    float:right;
+    padding:10px 20px;
+    border:none;
+    background:#FF6B6B;
+    color:white;
+    border-radius:20px;
+    cursor:pointer;
+}
+
+/* 모달 */
+.modal{
+    display:none;
+    position:fixed;
+    z-index:999;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.8);
+    justify-content:center;
+    align-items:center;
+}
+
+.modal-content{
+    max-width:80%;
+    max-height:80%;
+    border-radius:10px;
+}
+
+.close-btn{
+    position:absolute;
+    top:30px;
+    right:40px;
+    color:white;
+    font-size:40px;
+    cursor:pointer;
+}
+
+/* 팝업 */
+.copy-popup{
+    position:fixed;
+    bottom:30px;
+    left:50%;
+    transform:translateX(-50%);
+    background:#333;
+    color:white;
+    padding:12px 20px;
+    border-radius:30px;
+    font-size:14px;
+    opacity:0;
+    visibility:hidden;
+    transition:0.3s;
+    z-index:9999;
+}
+
+.copy-popup.show{
+    opacity:1;
+    visibility:visible;
+    bottom:50px;
+}
+
+/* 등록일 수정일 */
+.recipe-date-box{
+    margin-top:15px;
+    display:flex;
+    gap:20px;
+    padding-left:5px;
+}
+
+.recipe-date{
+    color:#888;
+    font-size:14px;
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+
+/* 후기 상단 */
+.review-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+/* 후기 제목 영역 */
+.review-title-wrap{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+/* 정렬 버튼 */
+.review-sort{
+    display:flex;
+    gap:10px;
+}
+
+.review-sort button{
+    border:none;
+    background:white;
+    padding:8px 14px;
+    border-radius:20px;
+    cursor:pointer;
+    font-size:14px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.05);
+    transition:0.2s;
+}
+
+.review-sort button:hover{
+    background:#FF6B6B;
+    color:white;
+}
+
+/* 후기 사진 업로드 */
+.review-upload{
+    margin-bottom:15px;
+}
+
+.upload-btn{
+    display:inline-block;
+    padding:8px 14px;
+    background:white;
+    border-radius:18px;
+    cursor:pointer;
+    border:1px solid #ddd;
+    transition:0.2s;
+    font-size:14px;
+}
+
+.upload-btn:hover{
+    background:#FF6B6B;
+    color:white;
+}
+
+#reviewImage{
+    display:none;
+}
+
+/* 후기 이미지 */
+.review-image{
+    width:120px;
+    height:120px;
+    object-fit:cover;
+    border-radius:12px;
+    margin-top:12px;
+    cursor:pointer;
+}
+
+.review-input-top{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:10px;
+}
+
+
+/* 후기 상단 */
+.review-input-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:10px;
+}
+
+/* 왼쪽 묶음 */
+.review-left-tools{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+/* 신고 버튼 */
+.report-btn{
+    border:none;
+    background:#fff0f0;
+    color:#ff4d4f;
+    padding:6px 12px;
+    border-radius:16px;
+    cursor:pointer;
+    font-size:13px;
+    transition:0.2s;
+}
+
+.report-btn:hover{
+    background:#ff4d4f;
+    color:white;
+}

@@ -1,0 +1,151 @@
+body{
+    margin:0;
+    background:#f5f5f7;
+    font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+}
+
+.board-container{
+    width:900px;
+    margin:140px auto;
+}
+
+.board-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.board-title{
+    font-size:40px;
+    margin:0;
+}
+
+.write-btn{
+    border:none;
+    background:#ff6b6b;
+    color:white;
+    padding:12px 24px;
+    border-radius:14px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+.search-form{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:25px;
+}
+
+.search-left{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.search-form input{
+    width:320px;
+    height:50px;
+    border:none;
+    border-radius:14px;
+    padding:0 16px;
+    background:white;
+    font-size:15px;
+    outline:none;
+}
+
+.search-left button{
+    width:100px;
+    height:50px;
+    border:none;
+    background:#ff6b6b;
+    color:white;
+    border-radius:14px;
+    cursor:pointer;
+    font-size:15px;
+}
+
+.sort-box{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.sort-box button{
+    border:none;
+    background:white;
+    padding:0 18px;
+    height:42px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:0.2s;
+    white-space:nowrap;
+}
+
+.sort-box button:hover{
+    background:#ff6b6b;
+    color:white;
+}
+
+.board-list{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.board-item{
+    background:white;
+    border-radius:20px;
+    padding:25px;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.board-item:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 20px rgba(0,0,0,0.08);
+}
+
+.board-item-title{
+    font-size:24px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.board-info{
+    color:#888;
+    font-size:15px;
+}
+
+.paging{
+    margin-top:40px;
+    display:flex;
+    justify-content:center;
+    gap:10px;
+}
+
+.paging a{
+    width:40px;
+    height:40px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:white;
+    border-radius:12px;
+    text-decoration:none;
+    color:#333;
+    font-weight:bold;
+    transition:0.2s;
+}
+
+.paging a:hover{
+    background:#ff6b6b;
+    color:white;
+}
+
+.active-page{
+    background:#ff6b6b !important;
+    color:white !important;
+}

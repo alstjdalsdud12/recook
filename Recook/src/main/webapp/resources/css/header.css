@@ -1,0 +1,91 @@
+/* header.css */
+
+:root {
+    --main-color: #FF6B6B;
+    --apple-gray: #1d1d1f;
+    --apple-sub-gray: #86868b;
+}
+
+.recook-header {
+    width: 100%;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    position: fixed;
+    top: 0; 
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 60px;
+    box-sizing: border-box;
+    z-index: 2000;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.logo { display: flex; align-items: center; text-decoration: none; gap: 10px; }
+.logo-symbol { position: relative; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; color: var(--main-color); }
+.fa-arrows-rotate { font-size: 24px; animation: rotateIcon 10s linear infinite; }
+.fa-mortar-pestle { position: absolute; font-size: 10px; }
+.logo-text { font-size: 22px; font-weight: 700; color: var(--main-color); letter-spacing: -1px; }
+
+.nav-container { display: flex; height: 100%; align-items: center; }
+.nav-item { height: 100%; display: flex; align-items: center; padding: 0 25px; }
+.nav-item > a { text-decoration: none; color: var(--apple-gray); font-size: 15px; font-weight: 500; transition: 0.3s; }
+.nav-item:hover > a { opacity: 0.5; }
+
+/* 메가 메뉴 디자인 */
+.mega-menu {
+    position: fixed;
+    top: 80px; 
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
+}
+
+.nav-item:hover .mega-menu { max-height: 500px; opacity: 1; }
+
+.mega-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 50px 20px 80px 20px;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 60px;
+}
+
+.mega-column h3 { font-size: 12px; color: var(--apple-sub-gray); margin-bottom: 25px; font-weight: 400; }
+.mega-column ul { list-style: none; padding: 0; margin: 0; }
+.mega-column ul li { margin-bottom: 15px; }
+.main-list li a { font-size: 26px; font-weight: 700; color: var(--apple-gray); text-decoration: none; transition: 0.2s; }
+.sub-list li a { font-size: 14px; font-weight: 600; color: var(--apple-gray); text-decoration: none; }
+.mega-column ul li a:hover { color: var(--main-color); }
+
+.nav-side { display: flex; align-items: center; gap: 20px; }
+.nav-side a { text-decoration: none; color: var(--apple-sub-gray); font-size: 14px; transition: 0.3s; }
+.login-btn { border: 1.5px solid var(--main-color); padding: 7px 20px; border-radius: 20px; color: var(--main-color) !important; }
+.login-btn:hover { background: var(--main-color); color: #fff !important; }
+
+@keyframes rotateIcon { 
+    from { transform: rotate(0deg); } 
+    to { transform: rotate(360deg); } 
+}
+
+.btn-write {
+    padding: 12px 24px;
+    background: #FF6B6B;
+    color: white !important;
+    text-decoration: none;
+    border-radius: 20px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.btn-write:hover {
+    background: #ff5252;
+}
