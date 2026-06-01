@@ -1,0 +1,49 @@
+body{
+    margin:0;
+    background:#f5f5f7;
+    font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+}
+
+.myboard-container{
+    width:1100px;
+    margin:140px auto;
+}
+
+.myboard-top{
+    margin-bottom:35px;
+}
+
+.myboard-top h1{
+    font-size:42px;
+    margin:0;
+}
+
+.myboard-list{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.myboard-item{
+    background:white;
+    border-radius:24px;
+    padding:30px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.myboard-item:hover{
+    transform:translateY(-4px);
+    box-shadow:0 10px 25px rgba(0,0,0,0.08);
+}
+
+.board-title{
+    font-size:24px;
+    font-weight:bold;
+    margin-bottom:14px;
+}
+
+.board-info{
+    color:#888;
+    font-size:15px;
+}

@@ -1,0 +1,398 @@
+body{
+
+    margin:0;
+
+    background:#f5f5f7;
+
+    font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+}
+
+.mypage-container{
+
+    width:1100px;
+
+    margin:120px auto 80px;
+}
+
+/* 프로필 */
+
+.profile-card{
+
+    background:white;
+
+    border-radius:28px;
+
+    padding:34px 42px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:28px;
+
+    box-shadow:
+    0 8px 24px rgba(0,0,0,.04);
+}
+
+.profile-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:28px;
+}
+
+/* 이미지 */
+
+.profile-image-box{
+
+    width:130px;
+
+    height:130px;
+
+    position:relative;
+}
+
+.profile-image{
+
+    width:130px;
+
+    height:130px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    display:block;
+
+    background:#eee;
+}
+
+/* 카메라 */
+
+.camera-btn{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    background:white;
+
+    position:absolute;
+
+    right:-4px;
+
+    bottom:-4px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    cursor:pointer;
+
+    box-shadow:
+    0 6px 18px rgba(0,0,0,.15);
+}
+
+#profileInput{
+
+    display:none;
+}
+
+/* 이름 */
+
+.name-row{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    margin-bottom:10px;
+}
+
+.name-row h2{
+
+    margin:0;
+
+    font-size:30px;
+}
+
+/* 등급 */
+
+.grade-area{
+
+    position:relative;
+
+    display:flex;
+
+    gap:8px;
+}
+
+.grade-badge{
+
+    background:#fff4e5;
+
+    color:#ff7b00;
+
+    padding:8px 14px;
+
+    border-radius:30px;
+
+    font-size:14px;
+
+    font-weight:700;
+}
+
+.grade-info-btn{
+
+    border:none;
+
+    background:#f5f5f5;
+
+    width:26px;
+
+    height:26px;
+
+    border-radius:50%;
+
+    cursor:pointer;
+}
+
+/* 팝업 */
+
+/* 등급 팝업 */
+
+.grade-popup{
+
+    display:none;
+
+    position:absolute;
+
+    top:42px;
+
+    left:0;
+
+    min-width:220px;
+
+    padding:16px 18px;
+
+    background:white;
+
+    border-radius:16px;
+
+    box-shadow:
+    0 10px 25px rgba(0,0,0,.12);
+
+    z-index:999;
+}
+
+/* 팝업 열릴 때 */
+
+.grade-popup.show{
+
+    display:block;
+}
+
+/* 팝업 안 한 줄씩 */
+
+.grade-popup div{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:7px 0;
+
+    font-size:15px;
+
+    line-height:1.4;
+
+    white-space:nowrap;
+}
+
+/* 상태 */
+
+.status-box{
+
+    margin-top:16px;
+}
+
+.status-row{
+
+    display:flex;
+
+    gap:10px;
+}
+
+.status-input{
+
+    width:280px;
+
+    padding:10px 14px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#f5f5f5;
+}
+
+.status-edit-btn{
+
+    border:none;
+
+    background:#ff6b6b;
+
+    color:white;
+
+    border-radius:10px;
+
+    padding:10px 16px;
+
+    cursor:pointer;
+}
+
+/* 수정버튼 */
+
+.edit-btn{
+
+    border:none;
+
+    background:#ff6b6b;
+
+    color:white;
+
+    padding:14px 24px;
+
+    border-radius:14px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+/* 쿠폰 */
+
+/* 쿠폰 */
+
+.coupon-menu{
+
+    background:white;
+
+    border-radius:24px;
+
+    padding:24px 40px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:28px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+    box-shadow:
+    0 8px 24px rgba(0,0,0,.04);
+}
+
+/* 마우스 올렸을 때 */
+
+.coupon-menu:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:
+    0 14px 28px rgba(0,0,0,.08);
+}
+
+/* 메뉴 */
+
+.menu-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:24px;
+}
+
+.menu-card{
+
+    background:white;
+
+    border-radius:24px;
+
+    min-height:220px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+    box-shadow:
+    0 8px 24px rgba(0,0,0,.04);
+}
+
+.menu-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:
+    0 14px 28px rgba(0,0,0,.08);
+}
+
+.menu-icon{
+
+    font-size:42px;
+
+    margin-bottom:12px;
+}
+
+.menu-title{
+
+    font-size:24px;
+
+    font-weight:800;
+}
+
+.menu-desc{
+
+    color:#888;
+}
+
+.menu-count{
+
+    font-size:42px;
+
+    font-weight:bold;
+
+    color:#ff6b6b;
+
+    margin-top:12px;
+}

@@ -1,0 +1,211 @@
+body{
+
+    margin:0;
+
+    background:#f5f5f7;
+
+    font-family:-apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+}
+
+/* 전체 */
+
+.coupon-container{
+
+    width:1100px;
+
+    margin:120px auto 80px;
+}
+
+/* 상단 */
+
+.coupon-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:40px;
+}
+
+.coupon-top h1{
+
+    margin:0;
+
+    font-size:38px;
+}
+
+.coupon-count{
+
+    background:white;
+
+    padding:14px 22px;
+
+    border-radius:14px;
+
+    font-weight:700;
+
+    box-shadow:0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* 리스트 */
+
+.coupon-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:24px;
+}
+
+/* 카드 */
+
+.coupon-card{
+
+    background:white;
+
+    border-radius:26px;
+
+    padding:34px 40px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    position:relative;
+
+    overflow:hidden;
+
+    box-shadow:0 8px 24px rgba(0,0,0,0.05);
+
+    transition:0.25s;
+}
+
+.coupon-card:hover{
+
+    transform:translateY(-4px);
+}
+
+/* 점선 */
+
+.coupon-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    right:140px;
+
+    width:2px;
+
+    height:100%;
+
+    background:repeating-linear-gradient(
+    to bottom,
+    #ddd 0,
+    #ddd 8px,
+    transparent 8px,
+    transparent 16px);
+}
+
+/* 왼쪽 */
+
+.coupon-left{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+}
+
+.coupon-brand{
+
+    font-size:18px;
+
+    font-weight:700;
+
+    color:#666;
+}
+
+.coupon-name{
+
+    font-size:32px;
+
+    font-weight:800;
+}
+
+.coupon-date{
+
+    color:#888;
+
+    font-size:15px;
+}
+
+/* 오른쪽 */
+
+.coupon-right{
+
+    width:120px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+}
+
+.coupon-badge{
+
+    background:#ff6b6b;
+
+    color:white;
+
+    padding:12px 18px;
+
+    border-radius:14px;
+
+    font-weight:700;
+
+    font-size:14px;
+}
+
+/* 브랜드 색 */
+
+.baemin{
+
+    border-left:10px solid #2ac1bc;
+}
+
+.starbucks{
+
+    border-left:10px solid #00704a;
+}
+
+.gs{
+
+    border-left:10px solid #5b8cff;
+}
+
+.cu{
+
+    border-left:10px solid #9b59b6;
+}
+
+/* 반응형 */
+
+@media(max-width:1200px){
+
+    .coupon-container{
+
+        width:92%;
+    }
+}

@@ -1,0 +1,135 @@
+body{
+    margin:0;
+    background:#f5f6f8;
+    font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+}
+
+.look-container{
+    width:1200px;
+    margin:140px auto 80px;
+}
+
+.look-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    margin-bottom:40px;
+}
+
+.look-sub{
+    color:#ff6b6b;
+    font-weight:700;
+    margin-bottom:10px;
+    letter-spacing:2px;
+}
+
+.look-top h1{
+    margin:0;
+    font-size:48px;
+    font-weight:800;
+}
+
+.recipe-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:28px;
+}
+
+.recipe-card{
+    background:white;
+    border-radius:28px;
+    overflow:hidden;
+    transition:0.3s;
+    cursor:pointer;
+    box-shadow:0 5px 20px rgba(0,0,0,0.04);
+}
+
+.recipe-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 15px 35px rgba(0,0,0,0.1);
+}
+
+.recipe-image{
+    height:220px;
+    position:relative;
+}
+
+.pasta{
+    background:
+    linear-gradient(
+    rgba(0,0,0,0.2),
+    rgba(0,0,0,0.2)),
+    url("https://images.unsplash.com/photo-1521389508051-d7ffb5dc8f70?q=80&w=1200&auto=format&fit=crop")
+    center/cover;
+}
+
+.rice{
+    background:
+    linear-gradient(
+    rgba(0,0,0,0.2),
+    rgba(0,0,0,0.2)),
+    url("https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=1200&auto=format&fit=crop")
+    center/cover;
+}
+
+.soup{
+    background:
+    linear-gradient(
+    rgba(0,0,0,0.2),
+    rgba(0,0,0,0.2)),
+    url("https://images.unsplash.com/photo-1547592180-85f173990554?q=80&w=1200&auto=format&fit=crop")
+    center/cover;
+}
+
+.recipe-badge{
+    position:absolute;
+    top:18px;
+    left:18px;
+    background:#ff6b6b;
+    color:white;
+    padding:8px 16px;
+    border-radius:30px;
+    font-size:14px;
+    font-weight:bold;
+}
+
+.recipe-content{
+    padding:28px;
+}
+
+.recipe-content h2{
+    margin:0 0 14px;
+    font-size:28px;
+    font-weight:800;
+    line-height:1.4;
+}
+
+.recipe-content p{
+    margin:0;
+    color:#777;
+    line-height:1.7;
+    font-size:16px;
+}
+
+.recipe-bottom{
+    margin-top:24px;
+    padding-top:20px;
+    border-top:1px solid #eee;
+    color:#999;
+    font-size:15px;
+}
+
+.recipe-bottom i{
+    margin-right:6px;
+}
+
+@media(max-width:1280px){
+
+    .look-container{
+        width:90%;
+    }
+
+    .recipe-grid{
+        grid-template-columns:1fr;
+    }
+}
