@@ -3,49 +3,68 @@
 
 <div class="sidebar">
 
-    <h2 class="logo">ReCook __Admin__</h2>
+	<h2 class="logo">ReCook __Admin__</h2>
 
-    <ul class="menu">
+	<ul class="menu">
 
-        <li><a href="${pageContext.request.contextPath}/admin">대시보드</a></li>
-        <li><a href="${pageContext.request.contextPath}/admin/user">회원 관리</a></li>
-        <li><a href="${pageContext.request.contextPath}/admin/recipe">레시피 관리</a></li>
+		<li><a href="${pageContext.request.contextPath}/admin">대시보드</a></li>
+		<li><a href="${pageContext.request.contextPath}/admin/user">회원
+				관리</a></li>
+		<li><a href="${pageContext.request.contextPath}/admin/recipe">레시피
+				관리</a></li>
+		<li><a href="${pageContext.request.contextPath}/admin/solution">솔루션
+				관리</a></li>
+				
+		<!-- 🔥 고객센터 -->
+		<li class="menu-item">
 
-        <!-- 🔥 고객센터 -->
+			<div class="menu-title" onclick="toggleMenu(this)">
+				고객센터 <span class="arrow">▼</span>
+			</div>
+
+			<ul class="submenu">
+				<li><a
+					href="${pageContext.request.contextPath}/admin/admin_notice">공지사항</a></li>
+				<li><a href="${pageContext.request.contextPath}/admin/inquiry">문의
+						관리</a></li>
+			</ul>
+
+		</li>
+		
+		<!-- 게시판 -->
         <li class="menu-item">
-
             <div class="menu-title" onclick="toggleMenu(this)">
-                고객센터
+                게시판
                 <span class="arrow">▼</span>
             </div>
-
             <ul class="submenu">
-                <li><a href="${pageContext.request.contextPath}/admin/admin_notice">공지사항</a></li>
-                <li><a href="${pageContext.request.contextPath}/admin/inquiry">문의 관리</a></li>
+                <li><a href="${pageContext.request.contextPath}/admin/board">자유게시판</a></li>
+                <li><a href="${pageContext.request.contextPath}/admin/event">이벤트게시판</a></li>
             </ul>
-
         </li>
 
-		<li><a href="${pageContext.request.contextPath}/admin/report">신고 관리</a></li>
+		<li><a href="${pageContext.request.contextPath}/admin/report">신고
+				관리</a></li>
 
-        <!-- 홈으로 돌아가기 -->
-        <li><a href="${pageContext.request.contextPath}/" class="home-link">홈으로</a></li>
+		<!-- 홈으로 돌아가기 -->
+		<li><a href="${pageContext.request.contextPath}/"
+			class="home-link">홈으로</a></li>
 
-    </ul>
+	</ul>
 
 </div>
 
 <script>
-function toggleMenu(element) {
-    const submenu = element.nextElementSibling;
-    const arrow = element.querySelector(".arrow");
+	function toggleMenu(element) {
+		const submenu = element.nextElementSibling;
+		const arrow = element.querySelector(".arrow");
 
-    if (submenu.style.display === "block") {
-        submenu.style.display = "none";
-        arrow.style.transform = "rotate(0deg)";
-    } else {
-        submenu.style.display = "block";
-        arrow.style.transform = "rotate(180deg)";
-    }
-}
+		if (submenu.style.display === "block") {
+			submenu.style.display = "none";
+			arrow.style.transform = "rotate(0deg)";
+		} else {
+			submenu.style.display = "block";
+			arrow.style.transform = "rotate(180deg)";
+		}
+	}
 </script>
