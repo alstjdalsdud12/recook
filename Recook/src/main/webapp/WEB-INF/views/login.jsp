@@ -24,7 +24,7 @@
         <div class="login-title">ReCook 로그인</div>
 
         <form action="${pageContext.request.contextPath}/login" method="post">
-            
+
             <div class="input-group">
                 <input type="text" name="id" placeholder="아이디">
             </div>
@@ -33,9 +33,15 @@
                 <input type="password" name="pw" placeholder="비밀번호">
             </div>
 
+            <% if (request.getAttribute("loginError") != null) { %>
+            <div class="login-error">
+                <%= request.getAttribute("loginError") %>
+            </div>
+            <% } %>
+
             <button type="submit" class="login-submit">로그인</button>
 
-        </form>	
+        </form>
 
         <div class="extra">
             계정이 없으신가요?
@@ -43,7 +49,7 @@
         </div>
 
         <div class="extra-links">
-            <a href="${pageContext.request.contextPath}/find_id">아이디 찾기</a> | 
+            <a href="${pageContext.request.contextPath}/find_id">아이디 찾기</a> |
             <a href="${pageContext.request.contextPath}/find_pw">비밀번호 찾기</a>
         </div>
 

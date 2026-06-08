@@ -7,9 +7,9 @@
 
     <ul class="menu">
 
-        <li><a href="#">대시보드</a></li>
+        <li><a href="${pageContext.request.contextPath}/admin">대시보드</a></li>
         <li><a href="${pageContext.request.contextPath}/admin/user">회원 관리</a></li>
-        <li><a href="#">레시피 관리</a></li>
+        <li><a href="${pageContext.request.contextPath}/admin/recipe">레시피 관리</a></li>
 
         <!-- 🔥 고객센터 -->
         <li class="menu-item">
@@ -25,6 +25,8 @@
             </ul>
 
         </li>
+
+		<li><a href="${pageContext.request.contextPath}/admin/report">신고 관리</a></li>
 
         <!-- 홈으로 돌아가기 -->
         <li><a href="${pageContext.request.contextPath}/" class="home-link">홈으로</a></li>

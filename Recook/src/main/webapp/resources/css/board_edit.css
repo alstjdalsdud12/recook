@@ -1,0 +1,56 @@
+body{
+    margin:0;
+    background:#f5f5f7;
+    font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+}
+
+.edit-container{
+    width:900px;
+    margin:140px auto;
+}
+
+.edit-box{
+    background:white;
+    border-radius:24px;
+    padding:40px;
+}
+
+.edit-title{
+    font-size:34px;
+    margin-bottom:30px;
+}
+
+.edit-box form{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.edit-box input[type="text"]{
+    height:55px;
+    border:none;
+    background:#f1f3f5;
+    border-radius:14px;
+    padding:0 16px;
+    font-size:16px;
+}
+
+.edit-box textarea{
+    height:320px;
+    border:none;
+    background:#f1f3f5;
+    border-radius:14px;
+    padding:20px;
+    resize:none;
+    font-size:16px;
+}
+
+.edit-box button{
+    height:52px;
+    border:none;
+    background:#4dabf7;
+    color:white;
+    border-radius:14px;
+    font-size:16px;
+    cursor:pointer;
+}

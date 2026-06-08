@@ -1,0 +1,342 @@
+@charset "UTF-8";
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css');
+
+:root {
+    --prm-point: #ff6e40;       /* 오렌지 포인트 */
+    --prm-point-dark: #e65100;
+    --prm-bg: #fffcf9;          /* 웜화이트 */
+    --prm-text-main: #1c1c1e;   /* 차콜 블랙 */
+    --prm-text-sub: #636366;    /* 세련된 그레이 */
+    --prm-glass: rgba(255, 255, 255, 0.7);
+    --prm-shadow-soft: 0 10px 30px rgba(28, 28, 30, 0.04);
+    --prm-shadow-deep: 0 20px 50px rgba(0, 0, 0, 0.06);
+    --prm-border: rgba(0, 0, 0, 0.06);
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: 'Pretendard', sans-serif;
+    background-color: var(--prm-bg);
+    margin: 0;
+    color: var(--prm-text-main);
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* 메인 화면의 메쉬 그라데이션 배경 감성 유지 */
+body::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1000px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(255,110,64,0.07) 0%, rgba(255,252,249,0) 70%);
+    z-index: -1;
+}
+
+.container {
+    max-width: 1140px; /* 카드가 배열되므로 폭을 더 확보 */
+    margin: 0 auto;
+    padding: 120px 24px 80px 24px;
+}
+
+/* 상단 타이틀 요약 */
+.result-summary {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.summary-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--prm-point);
+    background: rgba(255, 110, 64, 0.08);
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+}
+
+.result-summary h1 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    line-height: 1.3;
+    margin: 0 0 24px 0;
+    letter-spacing: -1px;
+}
+
+.result-summary h1 span {
+    color: var(--prm-point);
+}
+
+/* 선택된 타겟 재료 칩 */
+.selected-ingredients {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.ing-badge {
+    background: white;
+    color: var(--prm-text-main);
+    padding: 8px 18px;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: 1px solid var(--prm-border);
+    box-shadow: var(--prm-shadow-soft);
+}
+
+/* 필터 바 */
+.filter-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--prm-border);
+    padding-bottom: 16px;
+    margin-bottom: 32px;
+}
+
+.total-count {
+    font-size: 1.05rem;
+    color: var(--prm-text-sub);
+}
+.total-count strong {
+    color: var(--prm-text-main);
+}
+
+.sort-options span {
+    font-size: 0.95rem;
+    color: var(--prm-text-sub);
+    margin-left: 20px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.sort-options span.active, .sort-options span:hover {
+    color: var(--prm-point);
+    font-weight: 700;
+}
+
+/* 레시피 카드 그리드 */
+.recipe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
+    margin-bottom: 70px;
+}
+
+/* 레시피 프리미엄 카드 디자인 */
+.recipe-card {
+    background: white;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: var(--prm-shadow-soft);
+    border: 1px solid var(--prm-border);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.recipe-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--prm-shadow-deep);
+    border-color: rgba(255, 110, 64, 0.2);
+}
+
+/* 1순위 우수 매칭 카드 강조 */
+.recipe-card.premium {
+    border: 1px solid rgba(255, 110, 64, 0.3);
+    background: linear-gradient(180deg, #ffffff 0%, #fffbf7 100%);
+}
+
+/* 이미지 래퍼 */
+.card-image-wrap {
+    position: relative;
+    width: 100%;
+    padding-top: 68%; /* 16:10 비율 안정감 제공 */
+    overflow: hidden;
+    background-color: #f2f2f7;
+}
+
+.card-image-wrap img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.recipe-card:hover .card-image-wrap img {
+    transform: scale(1.06);
+}
+
+/* 매칭률 라벨 스티커 */
+.match-rate {
+    position: absolute;
+    top: 16px; left: 16px;
+    background: rgba(28, 28, 30, 0.85);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.recipe-card.premium .match-rate {
+    background: var(--prm-point);
+}
+
+/* 북마크 하트/리본 버튼 */
+.bookmark-btn {
+    position: absolute;
+    top: 16px; right: 16px;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    color: var(--prm-text-main);
+    transition: all 0.2s ease;
+}
+
+.bookmark-btn:hover {
+    transform: scale(1.1);
+}
+
+/* 카드 본문 콘텐츠 */
+.card-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.recipe-meta {
+    display: flex;
+    gap: 12px;
+    font-size: 0.85rem;
+    color: var(--prm-text-sub);
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+.recipe-meta i {
+    margin-right: 4px;
+}
+
+.recipe-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+    line-height: 1.4;
+    word-break: keep-all;
+    color: var(--prm-text-main);
+}
+
+.recipe-desc {
+    font-size: 0.95rem;
+    color: var(--prm-text-sub);
+    line-height: 1.5;
+    margin: 0 0 24px 0;
+    word-break: keep-all;
+    /* 두줄 제한 효과 */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* 카드 푸터 */
+.card-footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 16px;
+    border-top: 1px solid var(--prm-border);
+}
+
+.chef-tag {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #8e8e93;
+}
+.chef-tag i {
+    color: var(--prm-point);
+    margin-right: 4px;
+}
+
+.view-detail-btn {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--prm-text-main);
+    text-decoration: none;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.view-detail-btn:hover {
+    color: var(--prm-point);
+}
+
+/* 하단 다시하기 구역 */
+.bottom-action {
+    text-align: center;
+    margin-top: 40px;
+    padding: 40px 0;
+    border-top: 1px solid var(--prm-border);
+}
+
+.bottom-action p {
+    font-size: 1.05rem;
+    color: var(--prm-text-sub);
+    margin-bottom: 16px;
+}
+
+.retry-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--prm-text-main);
+    border: 1px solid var(--prm-text-main);
+    padding: 14px 28px;
+    border-radius: 40px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.retry-btn:hover {
+    background: var(--prm-text-main);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* 반응형 레이아웃 처리 */
+@media (max-width: 768px) {
+    .container { padding: 90px 20px 50px 20px; }
+    .recipe-grid { grid-template-columns: 1fr; gap: 20px; }
+    .filter-bar { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .sort-options span:first-child { margin-left: 0; }
+}

@@ -1,0 +1,201 @@
+@charset "UTF-8";
+
+/* Global & Container */
+.premium-container {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #ffffff;
+}
+
+.solution-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 180px 50px;
+}
+
+/* Premium Header - 순차적 등장 효과 준비 */
+.premium-header {
+    text-align: center;
+    margin-bottom: 120px;
+}
+
+/* Premium Header 수정 */
+.premium-header {
+    text-align: center;
+    margin-bottom: 120px;
+}
+
+.premium-header .reveal-text {
+    display: block;
+    font-size: 14px;
+    font-weight: 700; /* 너무 무겁지 않게 조절 */
+    letter-spacing: 0.5em; 
+    color: #ff6e40;
+    margin-bottom: 30px; /* 제목과의 간격 확보 */
+    text-transform: uppercase;
+    animation: fadeInDown 1.2s both;
+}
+
+.premium-header .main-title {
+    /* Playfair Display는 영문일 때만 예쁘므로, 국문은 Pretendard나 명조 계열 추천 */
+    font-family: 'Pretendard', sans-serif; 
+    font-size: clamp(28px, 4vw, 42px); /* 크기를 부담스럽지 않게 축소 */
+    line-height: 1.6; /* 행간을 넓혀서 시원하게 */
+    font-weight: 450; /* 얇은 두께로 변경 (핵심 포인트) */
+    font-style: normal; /* 이탤릭 제거하여 정갈하게 */
+    margin-bottom: 30px;
+    color: #1c1c1e;
+    letter-spacing: -0.03em; /* 한글은 자간을 살짝 좁히는 게 세련됨 */
+    word-break: keep-all; /* 단어 단위 줄바꿈 */
+    animation: fadeInDown 1.2s both 0.2s;
+}
+
+/* Premium Grid */
+.premium-grid {
+    display: flex;
+    gap: 30px; 
+    height: 750px;
+}
+
+.premium-card {
+    flex: 1; 
+    position: relative;
+    background-color: #1c1c1e;
+    overflow: hidden;
+    /* 고급스러운 베지어 곡선 적용 */
+    transition: all 0.9s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* [고급 효과 1] 호버 시 카드가 아주 깊이감 있게 확장 */
+.premium-card:hover {
+    flex: 1.15;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.2);
+}
+
+/* Visual Elements */
+.image-wrapper {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+}
+
+.visual-thumb {
+    width: 100%; height: 100%;
+    background-size: cover;
+    background-position: center;
+    /* [고급 효과 2] 흑백에서 컬러로, 혹은 선명도로 변하는 감각적 연출 */
+    filter: brightness(0.5) grayscale(0.3);
+    transform: scale(1.05);
+    transition: transform 1.8s cubic-bezier(0.19, 1, 0.22, 1), 
+                filter 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.premium-card:hover .visual-thumb {
+    transform: scale(1);
+    filter: brightness(0.8) grayscale(0);
+}
+
+.kitchen .visual-thumb { background-image: url('../images/a1.jpg'); }
+.ingredients .visual-thumb { background-image: url('../images/a2.jpg'); }
+
+.bg-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    /* 깊이감을 위한 다중 그라데이션 */
+    background: linear-gradient(to bottom, 
+                rgba(0,0,0,0) 0%, 
+                rgba(0,0,0,0) 50%, 
+                rgba(0,0,0,0.9) 100%);
+    z-index: 1;
+    transition: opacity 1s;
+}
+
+/* Content Overlay - 위치 상향 및 마스크 애니메이션 */
+.content-overlay {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    padding: 60px 60px 140px 60px; /* 텍스트 뭉치 위치 대폭 상향 */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; 
+    color: #ffffff;
+}
+
+/* [고급 효과 3] 텍스트 마스크 애니메이션 */
+.content-overlay h2, 
+.content-overlay p, 
+.content-overlay .explore-btn {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.premium-card:hover h2 { opacity: 1; transform: translateY(0); transition-delay: 0.1s; }
+.premium-card:hover p { opacity: 0.8; transform: translateY(0); transition-delay: 0.2s; }
+.premium-card:hover .explore-btn { opacity: 1; transform: translateY(0); transition-delay: 0.3s; }
+
+.cat-label {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    color: #ff6e40;
+    margin-bottom: 20px;
+}
+
+.content-overlay h2 {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    letter-spacing: -1px;
+}
+
+.content-overlay p {
+    font-size: 18px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.8);
+    font-weight: 300;
+    max-width: 440px;
+    margin-bottom: 50px;
+}
+
+/* Explore Button - 미니멀 인터랙션 */
+.explore-btn {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.explore-btn::after {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background-color: rgba(255,255,255,0.5);
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.premium-card:hover .explore-btn::after {
+    width: 80px;
+    background-color: #ff6e40;
+}
+
+/* 키프레임 애니메이션 */
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile Responsive */
+@media (max-width: 1024px) {
+    .premium-grid { flex-direction: column; height: auto; gap: 20px; }
+    .premium-card { height: 500px; }
+    .content-overlay { padding: 40px 40px 80px 40px; }
+    .content-overlay h2, .content-overlay p, .content-overlay .explore-btn {
+        opacity: 1; transform: translateY(0);
+    }
+}

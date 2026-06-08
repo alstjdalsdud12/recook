@@ -1,0 +1,60 @@
+body{
+    margin:0;
+    background:#f5f5f7;
+    font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+}
+
+.write-container{
+    width:900px;
+    margin:140px auto 80px auto;
+}
+
+.write-box{
+    background:white;
+    border-radius:24px;
+    padding:40px;
+}
+
+.write-title{
+    font-size:34px;
+    margin-bottom:35px;
+}
+
+.write-box form{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.write-box input[type="text"]{
+    height:55px;
+    border:none;
+    background:#f1f3f5;
+    border-radius:16px;
+    padding:0 18px;
+    font-size:16px;
+}
+
+.write-box textarea{
+    height:300px;
+    border:none;
+    background:#f1f3f5;
+    border-radius:16px;
+    padding:20px;
+    resize:none;
+    font-size:16px;
+}
+
+.write-box input[type="file"]{
+    font-size:15px;
+}
+
+.write-box button{
+    border:none;
+    background:#ff6b6b;
+    color:white;
+    height:52px;
+    border-radius:14px;
+    font-size:16px;
+    cursor:pointer;
+}

@@ -396,3 +396,20 @@ body{
 
     margin-top:12px;
 }
+
+.status-input {
+    border: none;
+    background: transparent;
+    cursor: default;
+    outline: none;
+    pointer-events: none;
+}
+
+.status-input:not([readonly]) {
+    border: 1px solid #ddd;
+    background: #f9f9f9;
+    cursor: text;
+    pointer-events: auto;
+    border-radius: 8px;
+    padding: 8px 12px;
+}

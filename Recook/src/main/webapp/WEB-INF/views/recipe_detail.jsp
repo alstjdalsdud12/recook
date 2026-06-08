@@ -14,48 +14,49 @@
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/header.css">
-
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/recipe_detail.css">
-
 </head>
 <body>
 
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 
 <%
-    Recipe recipe = (Recipe) request.getAttribute("recipe");
-    List<RecipeIngredient> ingredientList = (List<RecipeIngredient>) request.getAttribute("ingredientList");
-    List<RecipeStep> stepList = (List<RecipeStep>) request.getAttribute("stepList");
-    List<RecipeReview> reviewList = (List<RecipeReview>) request.getAttribute("reviewList");
+Recipe recipe = (Recipe) request.getAttribute("recipe");
+List<RecipeIngredient> ingredientList = (List<RecipeIngredient>) request.getAttribute("ingredientList");
+List<RecipeStep> stepList = (List<RecipeStep>) request.getAttribute("stepList");
+List<RecipeReview> reviewList = (List<RecipeReview>) request.getAttribute("reviewList");
+Boolean isFavorite = (Boolean) request.getAttribute("isFavorite");
+if (isFavorite == null) isFavorite = false;
 
-    String imageUrl;
-    if (recipe.getR_image() == null || recipe.getR_image().isEmpty()) {
-        imageUrl = request.getContextPath() + "/resources/images/default.png";
-    } else {
-        imageUrl = request.getContextPath() + "/recipeimage/" + recipe.getR_image();
-    }
+String imageUrl;
+if (recipe.getR_image() == null || recipe.getR_image().isEmpty()) {
+    imageUrl = request.getContextPath() + "/resources/images/default.png";
+} else {
+    imageUrl = request.getContextPath() + "/recipeimage/" + recipe.getR_image();
+}
 
-    // 평균 별점 계산
-    double avgRating = 0;
-    if (reviewList != null && !reviewList.isEmpty()) {
-        int sum = 0;
-        for (RecipeReview r : reviewList) {
-            sum += r.getRr_rating();
-        }
-        avgRating = (double) sum / reviewList.size();
+double avgRating = 0;
+if (reviewList != null && !reviewList.isEmpty()) {
+    int sum = 0;
+    for (RecipeReview r : reviewList) {
+        sum += r.getRr_rating();
     }
+    avgRating = (double) sum / reviewList.size();
+}
 %>
 
-<div class="main-container">
+<% if (request.getAttribute("reportSuccess") != null) { %>
+<script>alert('<%= request.getAttribute("reportSuccess") %>');</script>
+<% } %>
 
+<div class="main-container">
 	<div class="detail-wrapper">
 
 		<!-- 대표 이미지 -->
 		<div class="image-box">
 			<img src="<%= imageUrl %>" class="recipe-img"
-				onclick="openModal(this)"
-				onerror="this.style.display='none'">
+				onclick="openModal(this)" onerror="this.style.display='none'">
 			<div class="hits">조회수 <%= recipe.getR_hit() %></div>
 		</div>
 
@@ -72,7 +73,9 @@
 			<div>👨‍🍳 <%= recipe.getR_servings() %>인분</div>
 			<div>⏱ <%= recipe.getR_cooking_time() %>분</div>
 			<div>🔥 <%= recipe.getR_difficulty() %></div>
-			<button class="save-btn" onclick="toggleSave()">저장</button>
+			<button class="save-btn" onclick="toggleFavorite()">
+				<%= isFavorite ? "★ 저장됨" : "☆ 저장" %>
+			</button>
 			<button class="share-btn" onclick="copyUrl()">공유</button>
 		</div>
 
@@ -118,8 +121,7 @@
 						<% if (stepImageUrl != null) { %>
 						<div class="step-images">
 							<img src="<%= stepImageUrl %>" class="step-img"
-								onclick="openModal(this)"
-								onerror="this.style.display='none'">
+								onclick="openModal(this)" onerror="this.style.display='none'">
 						</div>
 						<% } %>
 					</div>
@@ -214,7 +216,7 @@
 								<span onclick="setReviewRating(5)">★</span>
 							</div>
 						</div>
-						<button type="button" class="report-btn" onclick="reportRecipe()">🚨 신고</button>
+						<button type="button" class="report-btn" onclick="openReportPopup()">🚨 신고</button>
 					</div>
 					<textarea name="rr_content" id="reviewText" placeholder="후기를 작성해주세요"></textarea>
 					<button type="submit" class="review-btn">등록</button>
@@ -224,7 +226,21 @@
 		</div>
 
 	</div>
+</div>
 
+<!-- 신고 팝업 -->
+<div id="reportPopup" class="report-popup" style="display:none;">
+	<div class="report-popup-box">
+		<h3>신고 사유를 입력해주세요</h3>
+		<form action="${pageContext.request.contextPath}/recipe/report" method="post">
+			<input type="hidden" name="r_no" value="<%= recipe.getR_no() %>">
+			<textarea name="rp_reason" placeholder="신고 사유를 입력해주세요" required></textarea>
+			<div class="report-popup-btns">
+				<button type="submit" class="report-submit-btn">신고하기</button>
+				<button type="button" class="report-cancel-btn" onclick="closeReportPopup()">취소</button>
+			</div>
+		</form>
+	</div>
 </div>
 
 <!-- 이미지 팝업 -->
@@ -235,9 +251,6 @@
 
 <!-- URL 복사 팝업 -->
 <div id="copyPopup" class="copy-popup">URL이 복사되었습니다 🙂</div>
-
-<!-- 저장 팝업 -->
-<div id="savePopup" class="copy-popup">저장되었습니다</div>
 
 <script>
 function openModal(img) {
@@ -262,15 +275,30 @@ function copyUrl() {
     setTimeout(() => popup.classList.remove("show"), 2000);
 }
 
-let saved = false;
-function toggleSave() {
-    const btn = document.querySelector(".save-btn");
-    const popup = document.getElementById("savePopup");
-    saved = !saved;
-    btn.innerHTML = saved ? "저장됨" : "저장";
-    popup.innerText = saved ? "저장되었습니다" : "저장이 취소되었습니다";
-    popup.classList.add("show");
-    setTimeout(() => popup.classList.remove("show"), 2000);
+function toggleFavorite() {
+    <% Integer m_no = (Integer) session.getAttribute("m_no");
+    if (m_no == null) { %>
+    if (confirm('로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?')) {
+        location.href = '${pageContext.request.contextPath}/login';
+    }
+    <% } else { %>
+    location.href = '${pageContext.request.contextPath}/mypage/favorite/toggle?r_no=<%= recipe.getR_no() %>';
+    <% } %>
+}
+
+function openReportPopup() {
+    <% Integer m_no2 = (Integer) session.getAttribute("m_no");
+    if (m_no2 == null) { %>
+    if (confirm('로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?')) {
+        location.href = '${pageContext.request.contextPath}/login';
+    }
+    <% } else { %>
+    document.getElementById("reportPopup").style.display = "flex";
+    <% } %>
+}
+
+function closeReportPopup() {
+    document.getElementById("reportPopup").style.display = "none";
 }
 
 let selectedRating = 0;
@@ -295,10 +323,6 @@ function sortReviews(type) {
         }
     });
     items.forEach(item => list.appendChild(item));
-}
-
-function reportRecipe() {
-    alert("신고가 접수되었습니다.");
 }
 </script>
 

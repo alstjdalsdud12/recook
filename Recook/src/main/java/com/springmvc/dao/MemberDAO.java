@@ -245,4 +245,33 @@ public class MemberDAO {
         
         return list;
     }
+    
+    public Member selectMember(int m_no) {
+        Member member = null;
+        String sql = "SELECT * FROM r_member WHERE m_no = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, m_no);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                member = new Member();
+                member.setM_no(rs.getInt("m_no"));
+                member.setM_id(rs.getString("m_id"));
+                member.setM_nickname(rs.getString("m_nickname"));
+                member.setM_email(rs.getString("m_email"));
+                member.setM_phone(rs.getString("m_phone"));
+                member.setM_role(rs.getString("m_role"));
+                member.setM_datetime(rs.getString("m_datetime"));
+                member.setM_status(rs.getString("m_status"));
+                member.setM_profile_image(rs.getString("m_profile_image"));
+            }
+            rs.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return member;
+    }
 }

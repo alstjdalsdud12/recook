@@ -1,11 +1,7 @@
 package com.springmvc.controller;
 
 import java.io.File;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,464 +11,203 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.springmvc.dao.BoardDAO;
 import com.springmvc.domain.Board;
 import com.springmvc.domain.Comment;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class BoardController {
 
-    public static List<Board> boardList =
-            new ArrayList<>();
-
-    private int nextId = 38;
-
-    private int nextCommentId = 1;
-
-    static {
-
-        for(int i = 1; i <= 37; i++) {
-
-            Board b = new Board();
-
-            b.setId(i);
-
-            b.setTitle(
-                    "테스트 게시글 " + i);
-
-            b.setWriter("민성");
-
-            b.setContent(
-                    "테스트 내용 " + i);
-
-            b.setHit(i * 3);
-
-            b.setLikeCount(i);
-
-            b.setRegDate(
-                    "2026-05-15");
-
-            boardList.add(b);
-        }
-    }
+    private BoardDAO boardDAO = new BoardDAO();
+    private String uploadDir = "C:\\RE_cook\\upload";
 
     // 게시판 목록 + 검색 + 정렬 + 페이징
     @GetMapping("/board")
     public String boardList(
-
-            @RequestParam(
-            value="page",
-            defaultValue="1")
-            int page,
-
-            @RequestParam(
-            value="keyword",
-            defaultValue="")
-            String keyword,
-
-            @RequestParam(
-            value="sort",
-            defaultValue="latest")
-            String sort,
-
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "keyword", defaultValue = "") String keyword,
+            @RequestParam(value = "sort", defaultValue = "latest") String sort,
             Model model) {
 
-        List<Board> filteredList =
-                new ArrayList<>(boardList);
-
-        // 검색
-        if(!keyword.trim().isEmpty()) {
-
-            filteredList =
-                    filteredList.stream()
-
-                    .filter(b ->
-                    b.getTitle()
-                    .contains(keyword))
-
-                    .collect(Collectors.toList());
-        }
-
-        // 정렬
-        if(sort.equals("hit")) {
-
-            filteredList.sort(
-                (a, b) ->
-                b.getHit() - a.getHit());
-        }
-
-        else if(sort.equals("like")) {
-
-            filteredList.sort(
-                (a, b) ->
-                b.getLikeCount()
-                - a.getLikeCount());
-        }
-
-        else {
-
-            filteredList.sort(
-                (a, b) ->
-                b.getId() - a.getId());
-        }
+        List<Board> list = boardDAO.selectAll(keyword, sort);
 
         int pageSize = 10;
+        int totalCount = list.size();
+        int totalPage = (int) Math.ceil((double) totalCount / pageSize);
+        int start = (page - 1) * pageSize;
+        int end = Math.min(start + pageSize, totalCount);
 
-        int totalCount =
-                filteredList.size();
+        List<Board> pagingList = list.subList(start, end);
 
-        int totalPage =
-                (int)Math.ceil(
-                        (double)totalCount
-                        / pageSize);
-
-        int start =
-                (page - 1) * pageSize;
-
-        int end =
-                Math.min(
-                        start + pageSize,
-                        totalCount);
-
-        List<Board> pagingList =
-                filteredList.subList(start, end);
-
-        model.addAttribute(
-                "boardList",
-                pagingList);
-
-        model.addAttribute(
-                "currentPage",
-                page);
-
-        model.addAttribute(
-                "totalPage",
-                totalPage);
-
-        model.addAttribute(
-                "keyword",
-                keyword);
-
-        model.addAttribute(
-                "sort",
-                sort);
+        model.addAttribute("boardList", pagingList);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPage", totalPage);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("sort", sort);
 
         return "board_list";
     }
 
     // 글쓰기 페이지
     @GetMapping("/board/write")
-    public String writeForm() {
-
+    public String writeForm(HttpSession session) {
+        if (session.getAttribute("m_nickname") == null) {
+            return "redirect:/login";
+        }
         return "board_write";
     }
 
     // 글 등록
     @PostMapping("/board/save")
     public String save(
+            @RequestParam("title") String title,
+            @RequestParam("content") String content,
+            @RequestParam(value = "imageFiles", required = false) MultipartFile[] imageFiles,
+            HttpSession session) {
 
-            @RequestParam("title")
-            String title,
-
-            @RequestParam("content")
-            String content,
-
-            @RequestParam(
-            value="imageFiles",
-            required=false)
-            MultipartFile[] imageFiles)
-
-            throws IllegalStateException,
-            IOException {
+        String writer = (String) session.getAttribute("m_nickname");
+        int m_no = (int) session.getAttribute("m_no");
 
         Board board = new Board();
+        board.setB_title(title);
+        board.setB_content(content);
+        board.setB_writer(writer);
+        board.setM_no(m_no);
 
-        board.setId(nextId++);
+        int b_id = boardDAO.insert(board);
 
-        board.setTitle(title);
-
-        board.setContent(content);
-
-        board.setWriter("민성");
-
-        board.setRegDate(
-                LocalDate.now().toString());
-
-        board.setHit(0);
-
-        board.setLikeCount(0);
-
-        String uploadPath =
-                "C:/springworkspace/upload/";
-
-        File dir =
-                new File(uploadPath);
-
-        if(!dir.exists()) {
-
-            dir.mkdirs();
-        }
-
-        if(imageFiles != null) {
-
-            for(MultipartFile file
-                    : imageFiles) {
-
-                if(!file.isEmpty()) {
-
-                    String fileName =
-                            file.getOriginalFilename();
-
-                    file.transferTo(
-
-                        new File(
-                        uploadPath + fileName));
-
-                    board.getImageList()
-                    .add(fileName);
+        if (imageFiles != null) {
+            for (MultipartFile file : imageFiles) {
+                if (!file.isEmpty()) {
+                    try {
+                        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+                        File dir = new File(uploadDir);
+                        if (!dir.exists()) dir.mkdirs();
+                        file.transferTo(new File(uploadDir + "\\" + fileName));
+                        boardDAO.insertImage(b_id, fileName);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
-
-        // 대표 이미지
-        if(!board.getImageList()
-                .isEmpty()) {
-
-            board.setImage(
-
-                board.getImageList()
-                .get(0));
-        }
-
-        boardList.add(board);
 
         return "redirect:/board";
     }
 
     // 상세
-    @GetMapping("/board/detail/{id}")
-    public String detail(
+    @GetMapping("/board/detail/{b_id}")
+    public String detail(@PathVariable("b_id") int b_id, Model model, HttpSession session) {
+        boardDAO.updateHit(b_id);
+        Board board = boardDAO.selectOne(b_id);
+        board.setImageList(boardDAO.selectImages(b_id));
+        board.setComments(boardDAO.selectComments(b_id));
+        model.addAttribute("board", board);
 
-            @PathVariable("id")
-            int id,
-
-            Model model) {
-
-        Board findBoard = null;
-
-        for(Board b : boardList) {
-
-            if(b.getId() == id) {
-
-                b.setHit(
-                        b.getHit() + 1);
-
-                findBoard = b;
-
-                break;
-            }
+        // 좋아요 여부 확인
+        Integer m_no = (Integer) session.getAttribute("m_no");
+        if (m_no != null) {
+            model.addAttribute("isLiked", boardDAO.isLiked(b_id, m_no));
+        } else {
+            model.addAttribute("isLiked", false);
         }
-
-        model.addAttribute(
-                "board",
-                findBoard);
 
         return "board_detail";
     }
-
     // 삭제
     @GetMapping("/board/delete")
-    public String delete(
-
-            @RequestParam("id")
-            int id) {
-
-        boardList.removeIf(
-                b -> b.getId() == id);
-
+    public String delete(@RequestParam("id") int b_id) {
+        boardDAO.delete(b_id);
         return "redirect:/board";
     }
 
     // 좋아요
     @GetMapping("/board/like")
-    public String like(
-
-            @RequestParam("id")
-            int id) {
-
-        for(Board b : boardList) {
-
-            if(b.getId() == id) {
-
-                b.setLikeCount(
-                        b.getLikeCount() + 1);
-            }
-        }
-
-        return "redirect:/board/detail/" + id;
+    public String like(@RequestParam("id") int b_id, HttpSession session) {
+        int m_no = (int) session.getAttribute("m_no");
+        boardDAO.toggleLike(b_id, m_no);
+        return "redirect:/board/detail/" + b_id;
     }
 
-    // 댓글
+    // 댓글 등록
     @PostMapping("/board/comment")
     public String comment(
+            @RequestParam("boardId") int b_id,
+            @RequestParam("content") String content,
+            HttpSession session) {
 
-            @RequestParam("boardId")
-            int boardId,
+        String writer = (String) session.getAttribute("m_nickname");
+        int m_no = (int) session.getAttribute("m_no");
 
-            @RequestParam("content")
-            String content) {
+        Comment comment = new Comment();
+        comment.setB_id(b_id);
+        comment.setM_no(m_no);
+        comment.setBc_writer(writer);
+        comment.setBc_content(content);
 
-        for(Board b : boardList) {
+        boardDAO.insertComment(comment);
 
-            if(b.getId() == boardId) {
-
-                Comment comment =
-                        new Comment();
-
-                comment.setId(
-                        nextCommentId++);
-
-                comment.setWriter("민성");
-
-                comment.setContent(content);
-
-                comment.setRegDate(
-                        LocalDate.now()
-                        .toString());
-
-                b.getComments()
-                .add(comment);
-
-                break;
-            }
-        }
-
-        return "redirect:/board/detail/" +
-                boardId;
+        return "redirect:/board/detail/" + b_id;
     }
 
     // 수정 페이지
-    @GetMapping("/board/edit/{id}")
-    public String editForm(
-
-            @PathVariable("id")
-            int id,
-
-            Model model) {
-
-        Board findBoard = null;
-
-        for(Board b : boardList) {
-
-            if(b.getId() == id) {
-
-                findBoard = b;
-
-                break;
-            }
-        }
-
-        model.addAttribute(
-                "board",
-                findBoard);
-
+    @GetMapping("/board/edit/{b_id}")
+    public String editForm(@PathVariable("b_id") int b_id, Model model) {
+        Board board = boardDAO.selectOne(b_id);
+        model.addAttribute("board", board);
         return "board_edit";
     }
 
     // 수정 저장
     @PostMapping("/board/update")
     public String update(
+            @RequestParam("id") int b_id,
+            @RequestParam("title") String title,
+            @RequestParam("content") String content) {
 
-            @RequestParam("id")
-            int id,
+        Board board = new Board();
+        board.setB_id(b_id);
+        board.setB_title(title);
+        board.setB_content(content);
 
-            @RequestParam("title")
-            String title,
+        boardDAO.update(board);
 
-            @RequestParam("content")
-            String content) {
-
-        for(Board b : boardList) {
-
-            if(b.getId() == id) {
-
-                b.setTitle(title);
-
-                b.setContent(content);
-
-                break;
-            }
-        }
-
-        return "redirect:/board/detail/" + id;
+        return "redirect:/board/detail/" + b_id;
     }
 
     // 댓글 삭제
     @GetMapping("/board/comment/delete")
     public String deleteComment(
+            @RequestParam("boardId") int b_id,
+            @RequestParam("commentId") int bc_id) {
 
-            @RequestParam("boardId")
-            int boardId,
+        boardDAO.deleteComment(bc_id);
 
-            @RequestParam("commentId")
-            int commentId) {
-
-        for(Board b : boardList) {
-
-            if(b.getId() == boardId) {
-
-                b.getComments().removeIf(
-                    c -> c.getId() == commentId
-                );
-
-                break;
-            }
-        }
-
-        return "redirect:/board/detail/" +
-                boardId;
+        return "redirect:/board/detail/" + b_id;
     }
 
     // 댓글 수정 페이지
     @GetMapping("/board/comment/edit")
     public String editCommentForm(
-
-            @RequestParam("boardId")
-            int boardId,
-
-            @RequestParam("commentId")
-            int commentId,
-
+            @RequestParam("boardId") int b_id,
+            @RequestParam("commentId") int bc_id,
             Model model) {
 
-        Board findBoard = null;
+        Board board = boardDAO.selectOne(b_id);
+        List<Comment> comments = boardDAO.selectComments(b_id);
 
         Comment findComment = null;
-
-        for(Board b : boardList) {
-
-            if(b.getId() == boardId) {
-
-                findBoard = b;
-
-                for(Comment c : b.getComments()) {
-
-                    if(c.getId() == commentId) {
-
-                        findComment = c;
-
-                        break;
-                    }
-                }
+        for (Comment c : comments) {
+            if (c.getBc_id() == bc_id) {
+                findComment = c;
+                break;
             }
         }
 
-        model.addAttribute(
-                "board",
-                findBoard);
-
-        model.addAttribute(
-                "comment",
-                findComment);
+        model.addAttribute("board", board);
+        model.addAttribute("comment", findComment);
 
         return "board_edit_comment";
     }
@@ -480,33 +215,40 @@ public class BoardController {
     // 댓글 수정 저장
     @PostMapping("/board/comment/update")
     public String updateComment(
+            @RequestParam("boardId") int b_id,
+            @RequestParam("commentId") int bc_id,
+            @RequestParam("content") String content) {
 
-            @RequestParam("boardId")
-            int boardId,
+        boardDAO.updateComment(bc_id, content);
 
-            @RequestParam("commentId")
-            int commentId,
+        return "redirect:/board/detail/" + b_id;
+    }
+    
+    @PostMapping("/board/reply")
+    public String reply(
+            @RequestParam("boardId") int b_id,
+            @RequestParam("parentId") int parent_id,
+            @RequestParam("content") String content,
+            @RequestParam("depth") int depth,
+            HttpSession session) {
 
-            @RequestParam("content")
-            String content) {
+        String writer = (String) session.getAttribute("m_nickname");
+        Integer m_no = (Integer) session.getAttribute("m_no");
 
-        for(Board b : boardList) {
-
-            if(b.getId() == boardId) {
-
-                for(Comment c : b.getComments()) {
-
-                    if(c.getId() == commentId) {
-
-                        c.setContent(content);
-
-                        break;
-                    }
-                }
-            }
+        if (writer == null || m_no == null) {
+            return "redirect:/login";
         }
 
-        return "redirect:/board/detail/" +
-                boardId;
+        Comment comment = new Comment();
+        comment.setB_id(b_id);
+        comment.setM_no(m_no);
+        comment.setBc_writer(writer);
+        comment.setBc_content(content);
+        comment.setParent_id(parent_id);
+        comment.setBc_depth(depth + 1);
+
+        boardDAO.insertComment(comment);
+
+        return "redirect:/board/detail/" + b_id;
     }
 }

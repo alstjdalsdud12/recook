@@ -123,6 +123,7 @@ body{
 .comment-top{
     display:flex;
     justify-content:space-between;
+    align-items:center;
     margin-bottom:10px;
 }
 
@@ -131,13 +132,27 @@ body{
 }
 
 .comment-date{
-    color:#888;
-    font-size:14px;
+    color:#999;
+    font-size:13px;
+    margin-top:3px;
 }
 
 .comment-content{
     line-height:1.6;
     margin-bottom:15px;
+}
+
+.comment-btns{
+    display:flex;
+    gap:8px;
+}
+
+.comment-btns button{
+    border:none;
+    background:#f1f3f5;
+    padding:6px 12px;
+    border-radius:10px;
+    cursor:pointer;
 }
 
 .comment-delete-btn{
@@ -155,41 +170,6 @@ body{
     margin-bottom:30px;
 }
 
-.edit-btn{
-    border:none;
-    background:#4dabf7;
-    color:white;
-    padding:10px 20px;
-    border-radius:12px;
-    cursor:pointer;
-    margin-right:10px;
-}
-
-.comment-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.comment-btns{
-    display:flex;
-    gap:8px;
-}
-
-.comment-btns button{
-    border:none;
-    background:#f1f3f5;
-    padding:6px 12px;
-    border-radius:10px;
-    cursor:pointer;
-}
-
-.comment-date{
-    color:#999;
-    font-size:13px;
-    margin-top:3px;
-}
-
 .detail-images{
     display:flex;
     gap:15px;
@@ -204,210 +184,67 @@ body{
     object-fit:cover;
     border-radius:18px;
     flex-shrink:0;
-}body{
-    margin:0;
-    background:#f5f5f7;
-    font-family:-apple-system,BlinkMacSystemFont,sans-serif;
 }
 
-.detail-container{
-    width:900px;
-    margin:140px auto 80px auto;
+/* 답글 버튼 */
+.reply-toggle-btn {
+    border: none;
+    background: none;
+    color: #ff6b6b;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-weight: 600;
 }
 
-.detail-box{
-    background:white;
-    border-radius:24px;
-    padding:40px;
+.reply-toggle-btn:hover {
+    background: #ffefef;
 }
 
-.detail-title{
-    font-size:38px;
-    margin-bottom:15px;
+/* 답글 작성 폼 */
+.reply-form {
+    margin-top: 12px;
+    margin-left: 20px;
+    padding: 15px;
+    background: #fff5f5;
+    border-radius: 14px;
+    border-left: 3px solid #ff6b6b;
 }
 
-.detail-info{
-    color:#888;
-    font-size:15px;
+.reply-write {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.like-box{
-    margin-top:25px;
-    margin-bottom:30px;
+.reply-write textarea {
+    height: 80px;
+    border: none;
+    background: white;
+    border-radius: 12px;
+    padding: 12px;
+    resize: none;
+    font-size: 14px;
 }
 
-.like-btn{
-    border:none;
-    background:#ffefef;
-    color:#ff6b6b;
-    padding:12px 22px;
-    border-radius:14px;
-    font-size:15px;
-    cursor:pointer;
-    font-weight:600;
+.reply-write button {
+    align-self: flex-end;
+    border: none;
+    background: #ff6b6b;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
 }
 
-.detail-content{
-    min-height:250px;
-    line-height:1.8;
-    font-size:18px;
-    margin-bottom:40px;
-    white-space:pre-line;
-}
-
-.detail-btns{
-    display:flex;
-    gap:10px;
-    margin-bottom:60px;
-}
-
-.edit-btn,
-.delete-btn,
-.list-btn{
-    border:none;
-    padding:12px 20px;
-    border-radius:12px;
-    cursor:pointer;
-    color:white;
-}
-
-.edit-btn{
-    background:#4dabf7;
-}
-
-.delete-btn{
-    background:#ff6b6b;
-}
-
-.list-btn{
-    background:#868e96;
-}
-
-.comment-title{
-    margin-bottom:25px;
-}
-
-.comment-write{
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-    margin-bottom:35px;
-}
-
-.comment-write textarea{
-    height:120px;
-    border:none;
-    background:#f1f3f5;
-    border-radius:18px;
-    padding:20px;
-    resize:none;
-    font-size:15px;
-}
-
-.comment-write button{
-    align-self:flex-end;
-    border:none;
-    background:#ff6b6b;
-    color:white;
-    padding:10px 20px;
-    border-radius:12px;
-    cursor:pointer;
-}
-
-.comment-list{
-    display:flex;
-    flex-direction:column;
-    gap:15px;
-}
-
-.comment-item{
-    background:#f8f9fa;
-    border-radius:18px;
-    padding:20px;
-}
-
-.comment-top{
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:10px;
-}
-
-.comment-writer{
-    font-weight:700;
-}
-
-.comment-date{
-    color:#888;
-    font-size:14px;
-}
-
-.comment-content{
-    line-height:1.6;
-    margin-bottom:15px;
-}
-
-.comment-delete-btn{
-    border:none;
-    background:#ff6b6b;
-    color:white;
-    padding:8px 16px;
-    border-radius:10px;
-    cursor:pointer;
-}
-
-.detail-image{
-    width:100%;
-    border-radius:20px;
-    margin-bottom:30px;
-}
-
-.edit-btn{
-    border:none;
-    background:#4dabf7;
-    color:white;
-    padding:10px 20px;
-    border-radius:12px;
-    cursor:pointer;
-    margin-right:10px;
-}
-
-.comment-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.comment-btns{
-    display:flex;
-    gap:8px;
-}
-
-.comment-btns button{
-    border:none;
-    background:#f1f3f5;
-    padding:6px 12px;
-    border-radius:10px;
-    cursor:pointer;
-}
-
-.comment-date{
-    color:#999;
-    font-size:13px;
-    margin-top:3px;
-}
-
-.detail-images{
-    display:flex;
-    gap:15px;
-    overflow-x:auto;
-    margin:25px 0;
-    padding-bottom:10px;
-}
-
-.detail-images img{
-    width:300px;
-    height:220px;
-    object-fit:cover;
-    border-radius:18px;
-    flex-shrink:0;
+/* 대댓글 아이템 */
+.reply-item {
+    background: #fff5f5;
+    border-radius: 14px;
+    padding: 15px;
+    margin-top: 10px;
+    margin-left: 20px;
+    border-left: 3px solid #ff6b6b;
 }

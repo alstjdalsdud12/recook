@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" session="true"%>
 
+<%@ page import="com.springmvc.dao.NotificationDAO"%>
+
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/header.css">
 <link rel="stylesheet"
@@ -46,21 +48,29 @@
 
 		<!-- 솔루션 -->
 		<div class="nav-item">
-			<a href="#">솔루션</a>
+			<a href="${pageContext.request.contextPath}/solution">솔루션</a>
 			<div class="mega-menu">
 				<div class="mega-content">
 					<div class="mega-column">
 						<h3>솔루션</h3>
 						<ul class="main-list">
-							<li><a href="#">재료 솔루션</a></li>
-							<li><a href="#">주방 솔루션</a></li>
+							<li><a
+								href="${pageContext.request.contextPath}/solution/ingredients">재료
+									솔루션</a></li>
+							<li><a
+								href="${pageContext.request.contextPath}/solution/kitchen">주방
+									솔루션</a></li>
 						</ul>
 					</div>
 					<div class="mega-column">
-						<h3>다양한 종류</h3>
+						<h3>더보기</h3>
 						<ul class="sub-list">
-							<li><a href="#">식기 종류</a></li>
-							<li><a href="#">재료 종류</a></li>
+							<li><a
+								href="${pageContext.request.contextPath}/solution/all">전체
+									솔루션</a></li>
+							<li><a
+								href="${pageContext.request.contextPath}/solution/popular">인기
+									솔루션</a></li>
 						</ul>
 					</div>
 				</div>
@@ -75,14 +85,14 @@
 					<div class="mega-column">
 						<h3>커뮤니티</h3>
 						<ul class="main-list">
-							<li><a href="#">자유게시판</a></li>
-							<li><a href="#">요리 인증샷</a></li>
+							<li><a href="${pageContext.request.contextPath}/board">자유게시판</a></li>
 						</ul>
 					</div>
 					<div class="mega-column">
 						<h3>이벤트</h3>
 						<ul class="sub-list">
-							<li><a href="#">진행 중인 이벤트</a></li>
+							<li><a href="${pageContext.request.contextPath}/event">진행
+									중인 이벤트</a></li>
 						</ul>
 					</div>
 				</div>
@@ -92,7 +102,6 @@
 		<!-- 고객센터 -->
 		<div class="nav-item">
 			<a href="${pageContext.request.contextPath}/customer">고객센터</a>
-
 			<div class="mega-menu">
 				<div class="mega-content">
 					<div class="mega-column">
@@ -130,11 +139,27 @@
 		<%
 		String nickname = (String) session.getAttribute("m_nickname");
 		if (nickname != null && !nickname.isEmpty()) {
+			Integer h_m_no = (Integer) session.getAttribute("m_no");
+			int unreadCount = 0;
+			if (h_m_no != null) {
+				NotificationDAO notificationDAO = new NotificationDAO();
+				unreadCount = notificationDAO.countUnread(h_m_no);
+			}
 		%>
 		<!-- 로그인 상태 -->
 		<a href="${pageContext.request.contextPath}/recipe/write"
-			class="btn-write">작성하기</a> <span class="nickname-text"><%=nickname%>님
-			환영합니다!</span> <a href="${pageContext.request.contextPath}/logout"
+			class="btn-write">작성하기</a> <a
+			href="${pageContext.request.contextPath}/mypage" class="mypage-btn">마이페이지</a>
+		<!-- 알림 -->
+		<a href="${pageContext.request.contextPath}/notification"
+			class="notification-btn"> 🔔 <%
+		if (unreadCount > 0) {
+		%> <span
+			class="notification-badge"><%=unreadCount%></span> <%
+ }
+ %>
+		</a> <span class="nickname-text"><%=nickname%>님 환영합니다!</span> <a
+			href="${pageContext.request.contextPath}/logout"
 			class="login-btn logout-btn">로그아웃</a>
 		<%
 		} else {

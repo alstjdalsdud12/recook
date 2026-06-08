@@ -1,154 +1,284 @@
-/* 기본 변수 설정 */
+@charset "UTF-8";
+
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css');
+
 :root {
-    --main-color: #FF6B6B;
-    --apple-gray: #1d1d1f;
-    --apple-sub-gray: #86868b;
-    --bg-color: #f8f9fa;
+    --prm-point: #ff6e40;
+    --prm-point-dark: #e65100;
+    --prm-bg: #fffcf9;
+    --prm-text-main: #1c1c1e;
+    --prm-text-sub: #636366;
+    --prm-glass: rgba(255, 255, 255, 0.7);
+    --prm-shadow-soft: 0 10px 30px rgba(28, 28, 30, 0.04);
+    --prm-shadow-deep: 0 20px 60px rgba(0, 0, 0, 0.06);
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-    font-family: 'Noto Sans KR', sans-serif;
-    background-color: var(--bg-color);
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+    background-color: var(--prm-bg);
     margin: 0;
-    color: var(--apple-gray);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     min-height: 100vh;
-    padding-top: 120px;
+    color: var(--prm-text-main);
+    overflow-x: hidden;
+    position: relative;
 }
 
-/* --- 헤더 스타일 --- */
-.recook-header {
-    width: 100%;
-    height: 80px;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(20px);
-    position: fixed;
-    top: 0; left: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 60px;
-    box-sizing: border-box;
-    z-index: 2000;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+body::before, body::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    z-index: -1;
+    opacity: 0.6;
+    animation: meshFlow 15s infinite alternate ease-in-out;
 }
 
-.logo { display: flex; align-items: center; text-decoration: none; gap: 10px; }
-.logo-symbol { position: relative; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; color: var(--main-color); }
-.fa-arrows-rotate { font-size: 24px; animation: rotateIcon 10s linear infinite; }
-.fa-mortar-pestle { position: absolute; font-size: 10px; }
-.logo-text { font-size: 22px; font-weight: 700; color: var(--main-color); letter-spacing: -1px; }
-
-/* 네비게이션 */
-.nav-container { display: flex; height: 100%; align-items: center; }
-.nav-item { height: 100%; display: flex; align-items: center; padding: 0 25px; }
-.nav-item > a { text-decoration: none; color: var(--apple-gray); font-size: 15px; font-weight: 500; transition: 0.3s; }
-.nav-item:hover > a { opacity: 0.5; }
-
-/* 메가 메뉴 슬라이드 */
-.mega-menu {
-    position: fixed;
-    top: 80px; left: 0; width: 100%;
-    background: #ffffff;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-    overflow: hidden;
-    max-height: 0; opacity: 0;
-    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
+body::before {
+    top: -10%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255,110,64,0.15) 0%, rgba(255,252,249,0) 70%);
 }
 
-.nav-item:hover .mega-menu { max-height: 500px; opacity: 1; }
-
-.mega-content {
-    max-width: 1100px; margin: 0 auto;
-    padding: 50px 20px 80px 20px;
-    display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 60px;
+body::after {
+    bottom: -10%;
+    left: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255,200,150,0.2) 0%, rgba(255,252,249,0) 70%);
+    animation-delay: -5s;
 }
 
-.mega-column h3 { font-size: 12px; color: var(--apple-sub-gray); margin-bottom: 25px; font-weight: 400; }
-.mega-column ul { list-style: none; padding: 0; margin: 0; }
-.main-list li a { font-size: 26px; font-weight: 700; color: var(--apple-gray); text-decoration: none; display: block; margin-bottom: 15px; transition: 0.2s; }
-.sub-list li a { font-size: 14px; font-weight: 600; color: var(--apple-gray); text-decoration: none; display: block; margin-bottom: 12px; }
-.mega-column a:hover { color: var(--main-color); }
+@keyframes meshFlow {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    100% { transform: translate(50px, 50px) rotate(10deg); }
+}
 
-/* 사이드 메뉴 */
-.nav-side { display: flex; align-items: center; gap: 20px; }
-.icon-btn { color: var(--apple-sub-gray); font-size: 20px; text-decoration: none; transition: 0.3s; }
-.icon-btn:hover { color: var(--main-color); }
-.login-btn { border: 1.5px solid var(--main-color); padding: 7px 22px; border-radius: 20px; color: var(--main-color); text-decoration: none; font-size: 14px; font-weight: 600; transition: 0.3s; }
-.login-btn:hover { background: var(--main-color); color: #fff; }
-
-/* --- 메인 콘텐츠 스타일 --- */
 .container {
-    max-width: 800px; width: 90%; text-align: center;
-    animation: fadeInUp 0.8s ease-out;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 80px 30px 0 30px;
+    text-align: center;
 }
 
-h1 { font-size: 48px; font-weight: 700; line-height: 1.3; margin-bottom: 40px; letter-spacing: -1.5px; }
-h1 span { color: var(--main-color); }
-
-.search-box {
-    background: white; padding: 12px 25px; border-radius: 50px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.05);
-    display: flex; align-items: center; margin-bottom: 30px;
-    transition: 0.3s;
+.hero-section {
+    margin-bottom: 20px;
 }
 
-.search-box:focus-within { box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
-.search-box input { border: none; outline: none; flex: 1; padding: 15px; font-size: 18px; color: var(--apple-gray); }
+.hero-section h1 {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 800;
+    line-height: 1.25;
+    margin-bottom: 10px;
+    letter-spacing: -1.5px;
+}
 
-.add-btn { background: var(--main-color); color: white; border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; transition: 0.3s; }
-.add-btn:hover { transform: scale(1.1) rotate(90deg); }
+.hero-section h1 span {
+    color: var(--prm-point);
+    position: relative;
+    display: inline-block;
+}
 
-.tag-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; min-height: 60px; margin-bottom: 50px; }
+.hero-section h1 span::after {
+    content: '';
+    position: absolute;
+    bottom: 8px;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background-color: rgba(255, 110, 64, 0.1);
+    z-index: -1;
+    border-radius: 4px;
+}
+
+.hero-section .sub-text {
+    font-size: 1.1rem;
+    color: var(--prm-text-sub);
+    font-weight: 400;
+    margin-top: 0;
+}
+
+.search-container {
+    background: var(--prm-glass);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 8px;
+    border-radius: 60px;
+    display: flex;
+    box-shadow: var(--prm-shadow-deep);
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.search-container:focus-within {
+    border-color: rgba(255, 110, 64, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 25px 70px rgba(255, 110, 64, 0.08);
+}
+
+.search-container input {
+    flex: 1;
+    border: none;
+    padding: 15px 25px;
+    font-size: 1.1rem;
+    outline: none;
+    background: transparent;
+    color: var(--prm-text-main);
+    font-weight: 500;
+}
+
+.search-container input::placeholder {
+    color: #aeaeb2;
+    font-weight: 400;
+}
+
+.add-btn {
+    background: var(--prm-point);
+    color: white;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 10px rgba(255, 110, 64, 0.2);
+}
+
+.add-btn:hover {
+    transform: rotate(90deg);
+    background: var(--prm-point-dark);
+}
+
+.recommend-chips {
+    margin-bottom: 20px;
+    color: var(--prm-text-sub);
+    font-size: 0.95rem;
+}
+
+.chip {
+    display: inline-block;
+    padding: 7px 16px;
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 30px;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-weight: 500;
+    border: 1px solid transparent;
+}
+
+.chip:hover {
+    background: white;
+    border-color: rgba(255, 110, 64, 0.2);
+    color: var(--prm-point);
+    transform: translateY(-1px);
+}
+
+.tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 15px;
+    min-height: 40px;
+}
 
 .ingredient-tag {
-    background: var(--main-color); color: white; padding: 10px 22px; border-radius: 30px;
-    font-size: 16px; font-weight: 500; display: flex; align-items: center;
-    box-shadow: 0 4px 10px rgba(255, 107, 107, 0.2);
-    animation: tagPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    background: white;
+    padding: 8px 18px;
+    border-radius: 40px;
+    border: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: var(--prm-shadow-soft);
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
 }
 
-.ingredient-tag i { margin-left: 10px; cursor: pointer; font-size: 14px; opacity: 0.7; transition: 0.2s; }
-.ingredient-tag i:hover { opacity: 1; transform: scale(1.2); }
+@keyframes popInPremium {
+    from { transform: scale(0.6) translateY(10px); opacity: 0; }
+    to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.ingredient-tag i {
+    cursor: pointer;
+    color: #c7c7cc;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+}
+
+.ingredient-tag i:hover {
+    color: var(--prm-point);
+}
 
 .submit-btn {
-    background: var(--apple-gray); color: white; padding: 22px 70px; border-radius: 50px;
-    border: none; font-size: 20px; font-weight: 700; cursor: pointer; transition: 0.4s;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    position: relative;
+    background: var(--prm-text-main);
+    color: white;
+    border: none;
+    padding: 18px 60px;
+    border-radius: 60px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--prm-shadow-deep);
+    overflow: hidden;
+    z-index: 1;
+}
+
+.submit-btn i {
+    margin-left: 12px;
+    transition: transform 0.3s ease;
 }
 
 .submit-btn:hover {
-    background: var(--main-color); transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(255, 107, 107, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.15);
 }
 
-/* 메가 메뉴 기본 상태 */
-.mega-menu {
-    position: fixed;
-    top: 80px;
-    left: 0;
-    width: 100%;
-    background: #ffffff;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-    overflow: hidden;
-    max-height: 0;
-    opacity: 0;
-    visibility: hidden; /* 마우스가 안 올라갔을 때 클릭 방지 */
-    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
-                opacity 0.3s ease, 
-                visibility 0.3s;
+.submit-btn:hover i {
+    transform: translateX(5px);
 }
 
-/* 마우스 호버 시 공통 적용 */
-.nav-item:hover .mega-menu {
-    max-height: 500px;
-    opacity: 1;
-    visibility: visible;
+.submit-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 140%;
+    height: 300%;
+    background: radial-gradient(circle, var(--prm-point) 0%, rgba(255,110,64,0) 60%);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.6s ease-out;
+    z-index: -1;
+    opacity: 0.5;
 }
 
-/* 애니메이션 정의 */
-@keyframes rotateIcon { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes tagPop { from { opacity: 0; transform: scale(0.5); } to { opacity: 1; transform: scale(1); } }
+.submit-btn:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+@media (max-width: 600px) {
+    .container { padding: 90px 20px 0 20px; }
+    .hero-section h1 { letter-spacing: -1px; }
+    .hero-section .sub-text { font-size: 1rem; }
+    .search-container { border-radius: 30px; }
+    .search-container input { padding: 13px 18px; font-size: 1rem; }
+    .add-btn { width: 44px; height: 44px; }
+    .submit-btn { width: 100%; padding: 18px 0; font-size: 1.1rem; }
+}

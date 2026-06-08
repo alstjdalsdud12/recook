@@ -1,6 +1,8 @@
 package com.springmvc.controller;
 import java.io.File;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,14 +10,22 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.springmvc.dao.MypageDAO;
 import com.springmvc.dao.RecipeDAO;
 import com.springmvc.domain.Recipe;
 import com.springmvc.domain.RecipeReview;
+import com.springmvc.service.GeminiService;
+
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class RecipeController {
     private RecipeDAO recipeDAO = new RecipeDAO();
+
+    @Autowired
+    private GeminiService geminiService;
 
     @GetMapping("/recipe")
     public String recipePage() {
@@ -50,13 +60,41 @@ public class RecipeController {
     }
 
     @GetMapping("/recipe_detail")
-    public String recipeDetail(@RequestParam(name = "r_no") int r_no, Model model) {
+    public String recipeDetail(@RequestParam(name = "r_no") int r_no, Model model, HttpSession session) {
         recipeDAO.updateHit(r_no);
         Recipe recipe = recipeDAO.selectOne(r_no);
         model.addAttribute("recipe", recipe);
         model.addAttribute("ingredientList", recipeDAO.selectIngredients(r_no));
         model.addAttribute("stepList", recipeDAO.selectSteps(r_no));
-        model.addAttribute("reviewList", recipeDAO.selectReviews(r_no));
+
+        List<RecipeReview> reviewList = recipeDAO.selectReviews(r_no);
+        model.addAttribute("reviewList", reviewList);
+
+        // 즐겨찾기 여부 확인
+        Integer m_no = (Integer) session.getAttribute("m_no");
+        if (m_no != null) {
+            MypageDAO mypageDAO = new MypageDAO();
+            boolean isFavorite = mypageDAO.isFavorite(m_no, r_no);
+            model.addAttribute("isFavorite", isFavorite);
+            mypageDAO.saveRecentView(m_no, r_no);
+        } else {
+            model.addAttribute("isFavorite", false);
+        }
+
+        // 댓글 요약
+        if (reviewList != null && !reviewList.isEmpty()) {
+            StringBuilder comments = new StringBuilder();
+            for (RecipeReview review : reviewList) {
+                comments.append(review.getRr_content()).append("\n");
+            }
+            try {
+                String summary = geminiService.summarizeComments(comments.toString());
+                model.addAttribute("summary", summary);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         return "recipe_detail";
     }
 
@@ -82,7 +120,6 @@ public class RecipeController {
         int m_no = (int) session.getAttribute("m_no");
         recipe.setM_no(m_no);
 
-        // 대표 이미지 저장
         MultipartFile r_imageFile = recipe.getR_imageFile();
         if (r_imageFile != null && !r_imageFile.isEmpty()) {
             try {
@@ -97,10 +134,8 @@ public class RecipeController {
             }
         }
 
-        // 레시피 저장 (r_no 반환)
         int r_no = recipeDAO.insert(recipe);
 
-        // 재료 저장
         if (ri_names != null) {
             for (int i = 0; i < ri_names.size(); i++) {
                 String name = ri_names.get(i);
@@ -115,7 +150,6 @@ public class RecipeController {
             }
         }
 
-        // 조리순서 저장
         if (rs_contents != null) {
             for (int i = 0; i < rs_contents.size(); i++) {
                 String rs_content = rs_contents.get(i);
@@ -141,7 +175,6 @@ public class RecipeController {
         return "redirect:/recipe";
     }
 
-    // 후기 등록
     @PostMapping("/recipe/review")
     public String submitReview(@RequestParam("r_no") int r_no,
                                @RequestParam("rr_content") String rr_content,
@@ -169,6 +202,21 @@ public class RecipeController {
         }
 
         recipeDAO.insertReview(review);
+        return "redirect:/recipe_detail?r_no=" + r_no;
+    }
+
+    @PostMapping("/recipe/report")
+    public String reportRecipe(
+            @RequestParam("r_no") int r_no,
+            @RequestParam("rp_reason") String rp_reason,
+            HttpSession session,
+            RedirectAttributes redirectAttributes) {
+
+        Integer m_no = (Integer) session.getAttribute("m_no");
+        if (m_no == null) return "redirect:/login";
+
+        recipeDAO.insertReport(r_no, m_no, rp_reason);
+        redirectAttributes.addFlashAttribute("reportSuccess", "신고가 접수되었습니다.");
         return "redirect:/recipe_detail?r_no=" + r_no;
     }
 }
